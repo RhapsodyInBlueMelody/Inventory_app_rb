@@ -1,0 +1,23 @@
+<header class="bg-gray-800 text-white shadow-md py-4">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center">
+    <div class="flex-shrink-0">
+      <h1 class="text-3xl font-extrabold text-gray-100">Inventory App Dashboard</h1>
+    </div>
+    <nav class="mt-4 sm:mt-0">
+      <ul class="flex space-x-6">
+        <li><%= link_to 'Dashboard', root_path, class: "text-white hover:text-blue-400 font-semibold transition duration-300" %></li>
+        <%# Add more navigation links here as needed %>
+        <li>
+          <% if current_user %>
+            <span class="text-gray-300 text-sm">Welcome, <%= current_user.name %>!</span>
+            <%# <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "text-red-400 hover:text-red-300 font-semibold transition duration-300" %> %>
+          <% else %>
+            <button onclick="signInWithGoogle()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+              Sign in with Google
+            </button>
+          <% end %>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

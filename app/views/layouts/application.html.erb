@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GudangQu</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+
+  <script src="https://cdn.tailwindcss.com"></script> <%# ADD THIS LINE %>
+</head>
+<body>
+
+  <%= render 'home/header' %>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <%# Tailwind container classes %>
+    <%= yield %>
+  </main>
+
+  <%= render 'home/footer' %>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    // IMPORTANT: Replace these with YOUR ACTUAL Firebase project config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBpMWelPTiUlrvoMM_TBx4AFnYmwkE7Ozk",
+      authDomain: "inventory-app-29fc2.firebaseapp.com",
+      databaseURL: "https://inventory-app-29fc2-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "inventory-app-29fc2",
+      storageBucket: "inventory-app-29fc2.firebasestorage.app",
+      messagingSenderId: "40401298274",
+      appId: "1:40401298274:web:ecb4c9ed0f55a0ef06423b",
+      measurementId: "G-VGWTNXJ86M",
+    };
+
+    // Initialize Firebase
+    // Access Firebase functions globally via `firebase.` object with 'compat' versions
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = app.auth(); // Get the Auth service instance
+    const googleProvider = new firebase.auth.GoogleAuthProvider(); // Google Auth Provider
+
+    // Function to handle Google Sign-In
+    window.signInWithGoogle = function() {
+      auth.signInWithPopup(googleProvider) // Use auth.signInWithPopup
+        .then((result) => {
+          // The Firebase User object
+          const user = result.user;
+          console.log("Firebase user signed in:", user);
+
+          // Get the Firebase ID Token
+          user.getIdToken().then((idToken) => {
+            console.log("Firebase ID Token:", idToken);
+            // Send the Firebase ID Token to your Rails backend for verification
+            sendFirebaseIdTokenToRails(idToken);
+          }).catch((error) => {
+            console.error("Error getting Firebase ID Token:", error);
+            alert("Login failed: Could not get ID token.");
+          });
+
+        }).catch((error) => {
+          // Handle Errors during Google Sign-In popup
+          const errorMessage = error.message;
+          console.error("Google Sign-In Error:", errorMessage);
+          alert("Google Sign-In failed: " + errorMessage);
+        });
+    };
+
+    // Function to send Firebase ID Token to Rails Backend
+    function sendFirebaseIdTokenToRails(idToken) {
+      fetch('/auth/google/callback', { // This is your Rails endpoint
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content // For Rails CSRF protection
+        },
+        body: JSON.stringify({ id_token: idToken })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          console.log('Backend verification successful:', data.message);
+          // Redirect or update UI after successful backend login
+          window.location.href = "/"; // Example: redirect to homepage
+        } else {
+          console.error('Backend verification failed:', data.message);
+          alert('Login failed: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error sending token to backend:', error);
+        alert('An error occurred during login.');
+      });
+    }
+
+    // Optional: Keep track of the user's sign-in status (good for overall app state)
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("User is signed in (via onAuthStateChanged):", user.uid);
+        // You might want to automatically send the token to backend if user is already signed in
+        // user.getIdToken().then(idToken => sendFirebaseIdTokenToRails(idToken));
+      } else {
+        console.log("User is signed out (via onAuthStateChanged).");
+      }
+    });
+
+  </script>
+</body>
+</html>

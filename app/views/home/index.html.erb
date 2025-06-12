@@ -1,0 +1,114 @@
+<div class="my-8 p-6 bg-white rounded-lg shadow-xl">
+  <h2 class="text-3xl font-extrabold text-gray-800 text-center mb-8">Dashboard Overview</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+    <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-800 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+      <h3 class="text-xl font-semibold mb-2">Total Barang Masuk</h3>
+      <p class="text-5xl font-bold text-blue-700"><%= @total_masuk_quantity %></p>
+    </div>
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-800 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+      <h3>Total Barang Keluar</h3>
+      <p class="text-5xl font-bold text-green-700"><%= @total_keluar_quantity %></p>
+    </div>
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+      <h3>Total Stok Tersedia</h3>
+      <p class="text-5xl font-bold text-yellow-700"><%= @total_stok_quantity %></p>
+    </div>
+  </div>
+
+  <h2 class="text-2xl font-bold text-gray-700 mt-10 mb-5 pb-2 border-b-2 border-gray-200">Barang Masuk (Incoming Items)</h2>
+  <% if @barang_masuk_items.any? %>
+    <div class="overflow-x-auto bg-white rounded-lg shadow-md mb-8">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cargo ID</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Barang</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Supplier</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor PO</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Masuk</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @barang_masuk_items.each do |item| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.cargoId %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.namaBarang %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.namaSupplier %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.nomorPO %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.quantity %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.tanggalMasuk %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.unit %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-center text-gray-500 p-4 bg-gray-50 rounded-md shadow-sm">No incoming items found.</p>
+  <% end %>
+
+  <h2 class="text-2xl font-bold text-gray-700 mt-10 mb-5 pb-2 border-b-2 border-gray-200">Barang Keluar (Outgoing Items)</h2>
+  <% if @barang_keluar_items.any? %>
+    <div class="overflow-x-auto bg-white rounded-lg shadow-md mb-8">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cargo ID</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Barang</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor Surat Jalan</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Keluar</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tujuan Pengiriman</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @barang_keluar_items.each do |item| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.cargoId %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.namaBarang %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.nomorSuratJalan %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.quantity %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.tanggalKeluar %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.tujuanPengiriman %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.unit %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-center text-gray-500 p-4 bg-gray-50 rounded-md shadow-sm">No outgoing items found.</p>
+  <% end %>
+
+  <h2 class="text-2xl font-bold text-gray-700 mt-10 mb-5 pb-2 border-b-2 border-gray-200">Stok Barang (Item Stock)</h2>
+  <% if @stok_barang_items.any? %>
+    <div class="overflow-x-auto bg-white rounded-lg shadow-md mb-8">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Barang</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stok Tersedia</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Keluar</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Masuk</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @stok_barang_items.each do |item| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.cargoId %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.stokTersedia %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.totalKeluar %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= item.totalMasuk %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-center text-gray-500 p-4 bg-gray-50 rounded-md shadow-sm">No stock items found.</p>
+  <% end %>
+</div>

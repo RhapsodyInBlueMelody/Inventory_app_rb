@@ -1,0 +1,18 @@
+<h1><%= @item['name'] %> Details</h1>
+
+<p><strong>Description:</strong> <%= @item['description'] %></p>
+<p><strong>Quantity:</strong> <%= @item['quantity'] %></p>
+<p><strong>Price:</strong> <%= number_to_currency(@item['price']) %></p>
+<p><strong>Category:</strong> <%= @item['category'] %></p>
+
+<%= link_to 'Edit', edit_inventory_path(@item['id']) %> |
+<%= link_to 'Back to Inventory', inventory_index_path %>
+
+<style>
+  /* Basic styling */
+  body { font-family: sans-serif; margin: 20px; }
+  h1 { color: #333; }
+  p { margin-bottom: 10px; }
+  a { text-decoration: none; color: #007bff; margin-right: 10px; }
+  a:hover { text-decoration: underline; }
+</style>

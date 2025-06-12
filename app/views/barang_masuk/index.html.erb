@@ -1,0 +1,121 @@
+<h1>Firebase Realtime Database Data Overview</h1>
+
+<h2>Barang Masuk (Incoming Items)</h2>
+<% if @barang_masuk_items.any? %>
+  <table border="1" style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>Cargo ID</th>
+        <th>Nama Barang</th>
+        <th>Nama Supplier</th>
+        <th>Nomor PO</th>
+        <th>Quantity</th>
+        <th>Tanggal Masuk</th>
+        <th>Unit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @barang_masuk_items.each do |item| %>
+        <tr>
+          <td><%= item.cargoId %></td>
+          <td><%= item.namaBarang %></td>
+          <td><%= item.namaSupplier %></td>
+          <td><%= item.nomorPO %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.tanggalMasuk %></td>
+          <td><%= item.unit %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No incoming items found.</p>
+<% end %>
+
+<h2>Barang Keluar (Outgoing Items)</h2>
+<% if @barang_keluar_items.any? %>
+  <table border="1" style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>Cargo ID</th>
+        <th>Nama Barang</th>
+        <th>Nomor Surat Jalan</th>
+        <th>Quantity</th>
+        <th>Tanggal Keluar</th>
+        <th>Tujuan Pengiriman</th>
+        <th>Unit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @barang_keluar_items.each do |item| %>
+        <tr>
+          <td><%= item.cargoId %></td>
+          <td><%= item.namaBarang %></td>
+          <td><%= item.nomorSuratJalan %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.tanggalKeluar %></td>
+          <td><%= item.tujuanPengiriman %></td>
+          <td><%= item.unit %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No outgoing items found.</p>
+<% end %>
+
+<h2>Stok Barang (Item Stock)</h2>
+<% if @stok_barang_items.any? %>
+  <table border="1" style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>Nama Barang</th>
+        <th>Stok Tersedia</th>
+        <th>Total Keluar</th>
+        <th>Total Masuk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stok_barang_items.each do |item| %>
+        <tr>
+          <td><%= item.nama_barang %></td>
+          <td><%= item.stokTersedia %></td>
+          <td><%= item.totalKeluar %></td>
+          <td><%= item.totalMasuk %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No stock items found.</p>
+<% end %>
+
+<h2>Users</h2>
+<% if @users.any? %>
+  <table border="1" style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Nama Lengkap</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.userId %></td>
+          <td><%= user.username %></td>
+          <td><%= user.namaLengkapUser %></td>
+          <td><%= user.emailUser %></td>
+          <td><%= user.role %></td>
+          <td><%= user.statusUser %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No users found.</p>
+<% end %>
